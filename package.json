@@ -2,7 +2,7 @@
     "name": "git-stash-viewer",
     "displayName": "Git Stash Viewer",
     "description": "A simple viewlet for Git Stash list.",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "publisher": "matsken",
     "engines": {
         "vscode": "^1.16.0"
