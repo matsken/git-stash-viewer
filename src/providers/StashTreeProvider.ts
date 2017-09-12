@@ -1,3 +1,5 @@
+"use strict";
+
 import * as vscode from "vscode";
 import * as cp from "child_process";
 
@@ -9,7 +11,6 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 	readonly onDidChangeTreeData: vscode.Event<Stash | undefined | null> = this.onDidChangeTreeDataEmitter.event;
 
 	refresh(): void {
-		console.log("Refresh event fired");
 		this.onDidChangeTreeDataEmitter.fire();
 	}
 	getChildren(stash?: Stash): Thenable<vscode.TreeItem[]> {
