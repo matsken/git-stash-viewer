@@ -31,13 +31,17 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 				return Promise.resolve([]);
 			}
 		}
-		return new Promise<Stash[]>((resolve, reject) => {
+		return new Promise<vscode.TreeItem[]>((resolve, reject) => {
 			cp.exec("git stash list", {
 				cwd: this.workspaceRoot
 			}, (err, stdout) => {
 				if (err) {
 					console.log(err);
 					return reject('git not found');
+				}
+				const trimmed = stdout.trim();
+				if (!trimmed) {
+					return resolve([new vscode.TreeItem("Nothing stashed", vscode.TreeItemCollapsibleState.None)]);
 				}
 				const arr = stdout.trim().split("\n");
 				return resolve(arr.map((item) => {
