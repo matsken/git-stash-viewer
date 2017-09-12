@@ -5,11 +5,9 @@ import * as vscode from 'vscode';
 import {StashTreeProvider} from "./providers/StashTreeProvider";
 
 let fsWatcher: vscode.FileSystemWatcher;
-console.log("hoge");
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	console.log("test");
 	const gitStashProvider = new StashTreeProvider(vscode.workspace.rootPath);
 	vscode.window.registerTreeDataProvider("gitStash", gitStashProvider);
 	fsWatcher = vscode.workspace.createFileSystemWatcher("*");
