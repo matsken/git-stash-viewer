@@ -5,6 +5,13 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 	constructor(private workspaceRoot: string) {
 	}
 
+	private onDidChangeTreeDataEmitter: vscode.EventEmitter<Stash | undefined | null> = new vscode.EventEmitter<Stash | undefined | null>();
+	readonly onDidChangeTreeData: vscode.Event<Stash | undefined | null> = this.onDidChangeTreeDataEmitter.event;
+
+	refresh(): void {
+		console.log("Refresh event fired");
+		this.onDidChangeTreeDataEmitter.fire();
+	}
 	getChildren(stash?: Stash): Thenable<vscode.TreeItem[]> {
 		if (stash) {
 			if (stash instanceof Stash) {
