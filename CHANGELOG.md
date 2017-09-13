@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.1.4]
+- Handle autostash
+
 ## [0.1.2]
 - Add CHANGELOG
 

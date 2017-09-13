@@ -22,9 +22,10 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 					}, (err, stdout) => {
 						if (err) {
 							console.log(err);
-							return reject("error running git stash show");
+							reject("error running git stash show");
+						} else {
+							resolve(stdout.trim().split("\n").map((line) => new vscode.TreeItem(line)));
 						}
-						return resolve(stdout.trim().split("\n").map((line) => new vscode.TreeItem(line)));
 					});
 				});
 			} else {
@@ -41,16 +42,20 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 				}
 				const trimmed = stdout.trim();
 				if (!trimmed) {
-					return resolve([new vscode.TreeItem("Nothing stashed", vscode.TreeItemCollapsibleState.None)]);
+					resolve([new vscode.TreeItem("Nothing stashed")]);
+				} else {
+					const arr = stdout.trim().split("\n");
+					resolve(arr.map((item) => {
+						const comps = item.split(":");
+						const id = comps[0].split("{")[1].split("}")[0];
+						let branch = "", commit = "";
+						if (comps.length > 2) {
+							branch = comps[1].trim().split("WIP on ")[0];
+							commit = comps[2].trim().split(" ")[0];
+						}
+						return this.createItem(branch, commit, id, item);
+					}));
 				}
-				const arr = stdout.trim().split("\n");
-				return resolve(arr.map((item) => {
-					const comps = item.split(":");
-					const id = comps[0].split("{")[1].split("}")[0];
-					const branch = comps[1].trim().split("WIP on ")[0];
-					const commit = comps[2].trim().split(" ")[0];
-					return this.createItem(branch, commit, id, item);
-				}));
 			});
 		});
 	}
@@ -75,11 +80,5 @@ class Stash extends vscode.TreeItem {
 	) {
 		super(label, collapsibleState);
 	}
-
-	// iconPath = {
-	// 	light: path.join(__filename, '..', '..', '..', 'resources', 'light', 'dependency.svg'),
-	// 	dark: path.join(__filename, '..', '..', '..', 'resources', 'dark', 'dependency.svg')
-	// };
-
 	contextValue = 'stash';
 }
