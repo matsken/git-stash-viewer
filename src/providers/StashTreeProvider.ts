@@ -13,6 +13,7 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 	refresh(): void {
 		this.onDidChangeTreeDataEmitter.fire();
 	}
+	
 	getChildren(stash?: Stash): Thenable<vscode.TreeItem[]> {
 		if (stash) {
 			if (stash instanceof Stash) {

@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.1.5]
+- Impreove error message, formatting
+
 ## [0.1.4]
 - Handle autostash
 

@@ -11,8 +11,6 @@ Your workspace needs to be a Git repository.
 ## Extension Settings
 None
 
-## Known Issues
-
-## Release Notes
-### 0.0.1
-Initial version
+## Repository
+Please raise any issues here
+https://github.com/matsken/git-stash-viewer
