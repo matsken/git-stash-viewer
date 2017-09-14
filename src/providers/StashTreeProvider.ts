@@ -17,12 +17,13 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 		if (stash) {
 			if (stash instanceof Stash) {
 				return new Promise<vscode.TreeItem[]>((resolve, reject) => {
-					cp.exec("git stash show " + stash.id, {
+					const cmd = "git stash show " + (stash.id + "");
+					cp.exec(cmd, {
 						cwd: this.workspaceRoot
 					}, (err, stdout) => {
 						if (err) {
 							console.log(err);
-							reject("error running git stash show");
+							reject("Error running command: " + cmd);
 						} else {
 							resolve(stdout.trim().split("\n").map((line) => new vscode.TreeItem(line)));
 						}
