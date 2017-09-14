@@ -1,8 +1,8 @@
 {
-    "name": "git-stash-viewer2",
+    "name": "git-stash-viewer",
     "displayName": "Git Stash Viewer",
     "description": "A simple viewlet for Git Stash list.",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "publisher": "matsken",
     "repository": {
         "type": "git",
