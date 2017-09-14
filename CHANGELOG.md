@@ -1,7 +1,10 @@
 # Change Log
 
-## [0.1.5]
-- Impreove error message, formatting
+## [0.1.8]
+- Improve manifest
+
+## [0.1.6]
+- Add refresh button
 
 ## [0.1.4]
 - Handle autostash

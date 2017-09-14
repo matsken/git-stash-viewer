@@ -1,10 +1,17 @@
 {
-    "name": "git-stash-viewer",
+    "name": "git-stash-viewer2",
     "displayName": "Git Stash Viewer",
     "description": "A simple viewlet for Git Stash list.",
-    "version": "0.1.5",
+    "version": "0.1.8",
     "publisher": "matsken",
-    "repository": "https://github.com/matsken/git-stash-viewer",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/matsken/git-stash-viewer.git"
+    },
+    "bugs": {
+        "url": "https://github.com/matsken/git-stash-viewer/issues"
+    },
+    "license": "MIT",
     "engines": {
         "vscode": "^1.16.0"
     },
@@ -16,11 +23,30 @@
     ],
     "main": "./out/src/extension",
     "contributes": {
+        "commands": [
+            {
+                "command": "gitStash.refresh",
+                "title": "Refresh",
+                "icon": {
+                    "light": "resources/light/refresh.svg",
+                    "dark": "resources/dark/refresh.svg"
+                }
+            }
+        ],
         "views": {
             "explorer": [
                 {
                     "id": "gitStash",
                     "name": "Git Stash"
+                }
+            ]
+        },
+        "menus": {
+            "view/title": [
+                {
+                    "command": "gitStash.refresh",
+                    "when": "view == gitStash",
+                    "group": "navigation"
                 }
             ]
         }

@@ -13,7 +13,7 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 	refresh(): void {
 		this.onDidChangeTreeDataEmitter.fire();
 	}
-	
+
 	getChildren(stash?: Stash): Thenable<vscode.TreeItem[]> {
 		if (stash) {
 			if (stash instanceof Stash) {
@@ -47,15 +47,8 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 					resolve([new vscode.TreeItem("Nothing stashed")]);
 				} else {
 					const arr = stdout.trim().split("\n");
-					resolve(arr.map((item) => {
-						const comps = item.split(":");
-						const id = comps[0].split("{")[1].split("}")[0];
-						let branch = "", commit = "";
-						if (comps.length > 2) {
-							branch = comps[1].trim().split("WIP on ")[0];
-							commit = comps[2].trim().split(" ")[0];
-						}
-						return this.createItem(branch, commit, id, item);
+					resolve(arr.map((item, index) => {
+						return this.createItem(index, item);
 					}));
 				}
 			});
@@ -66,15 +59,13 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 		return stash;
 	}
 
-	createItem(branch, commit, id, label) {
-		return new Stash(branch, commit, id, label, vscode.TreeItemCollapsibleState.Collapsed);
+	createItem(id, label) {
+		return new Stash(id, label, vscode.TreeItemCollapsibleState.Collapsed);
 	}
 }
 
 class Stash extends vscode.TreeItem {
 	constructor(
-		public readonly branch: string,
-		public readonly commit: string,
 		public readonly id: number,
 		public readonly label: string,
 		public readonly collapsibleState: vscode.TreeItemCollapsibleState,
