@@ -3,6 +3,8 @@
 import * as vscode from "vscode";
 import * as cp from "child_process";
 
+const EOL = (process.platform === "win32") ? "\r\n" : "\n";
+
 export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 	constructor(private workspaceRoot: string) {
 	}
@@ -18,16 +20,15 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 		if (stash) {
 			if (stash instanceof Stash) {
 				return new Promise<vscode.TreeItem[]>((resolve, reject) => {
-					const cmd = "git stash show " + (stash.id + "");
+					const cmd = "git stash show " + (stash.id || "");
 					cp.exec(cmd, {
 						cwd: this.workspaceRoot
 					}, (err, stdout) => {
+						let msg = stdout;
 						if (err) {
-							console.log(err);
-							reject("Error running command: " + cmd);
-						} else {
-							resolve(stdout.trim().split("\n").map((line) => new vscode.TreeItem(line)));
+							msg = "Error running command: " + cmd + EOL + err;
 						}
+						resolve(msg.split(EOL).map((line) => new vscode.TreeItem(line.trim())));
 					});
 				});
 			} else {

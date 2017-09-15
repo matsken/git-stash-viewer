@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.1.10]
+- Improve error handling
+
 ## [0.1.8]
 - Improve manifest
 
