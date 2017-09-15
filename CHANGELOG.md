@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.1.11]
+- Make stash id more precise
+
 ## [0.1.10]
 - Improve error handling
 

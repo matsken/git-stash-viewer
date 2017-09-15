@@ -48,8 +48,8 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 					resolve([new vscode.TreeItem("Nothing stashed")]);
 				} else {
 					const arr = stdout.trim().split("\n");
-					resolve(arr.map((item, index) => {
-						return this.createItem(index, item);
+					resolve(arr.map((item) => {
+						return this.createItem(item);
 					}));
 				}
 			});
@@ -60,7 +60,9 @@ export class StashTreeProvider implements vscode.TreeDataProvider<vscode.TreeIte
 		return stash;
 	}
 
-	createItem(id, label) {
+	createItem(item) {
+		const label = item;
+		const id = label.split(":")[0];
 		return new Stash(id, label, vscode.TreeItemCollapsibleState.Collapsed);
 	}
 }
